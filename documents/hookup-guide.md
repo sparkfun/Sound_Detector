@@ -1,142 +1,152 @@
-#SparkFun Sound Detector Hookup Guide
+# SparkFun Sound Detector Hookup Guide
 
-##Introduction
+	pic - default product img
 
-### Covered In This Tutorial
+The Sound Detector is a small board that combines a microphone and some processing circuitry.  It provides not only an audio output, but also a binary indication of the presence of sound and an analog representation of it's amplitude. 
 
-### Required Materials
+### Quick Start
 
-* [SparkFun Sound Detector](https://www.sparkfun.com/products/...) 
-* [Arduino](https://www.sparkfun.com/products/11021), [RedBoard](https://www.sparkfun.com/products/11575) or any [Arduino-compatible](https://www.sparkfun.com/categories/242) board. 
-* [Male PTH headers](https://www.sparkfun.com/products/116) or [right angle PTH headers](https://www.sparkfun.com/products/553).
-* [Jumper Wires](https://www.sparkfun.com/products/9385)
+To get started with the Sound Detector, simply connect it to a power supply, as follows
 
-### Suggested Reading
+(Sound Detector → Power Supply )
 
-* [What is an Arduino?](tutorials/50)
-* [How to Solder](tutorials/5)
-* [Working with Wire](tutorials/41)
-* [Analog to Digital Conversion](tutorials/35)
+* GND → Supply Ground
+* VCC → Power supply voltage between 3.5 and 5.5 Volts
+
+In a quiet room, power the board up, and then speak into the microphone.  You should see the red LED on the board blink in response to your voice.
+
+With it's 3 outputs, the board itself is a lot more flexible.  To explore that flexibility, read on.
 
 ---
+## 3 Outputs?
 
-## Background
+The Sound Detector has 3 separate outputs.  
 
-Before we discuss how to hook up the Sound Detector board, let's take a step back and look at some of the fundamentals of what sound is.  Sound itself is a somewhat unruly phenemenon, and an understanding of the basics will help you make more effective use of the Sound Detector.
+It's easiest to see what each is doing with a graph.
 
-### Definition
+	waveforms
+ 
+The graph is illustrating voltage over time 
 
-Sound is a periodic change in air pressure.  By periodic, we mean that the air is moving back and forth.  If the air were consistently moving in one direction, it is the phonemenon we call *wind*.  The air is set in motion by a vibrating object
-
-Often, when we think of sound, we mean the variation in air pressure that our ears can hear, but it exists more broadly in the physical world.  There are extremely quiet sounds we simply can't hear (called *microsound*).  There are also frequencies we can't hear, such as the low frequency rumbling of earthquakes (called *infrasound*), or the high frequencies of a dog whistle (known as *ultrasound*).  When based on what we hear, it called the *perceptual* basis of sound, as opposed to the *physical*, which is based on the actual movement of atoms of air.  
-
-The study of the physics of sound is called *acoustics*, while the study of our perception of sound is known as *psychoacoustics*. 
-
-> One of the difficulties we face when working with sound is that the physical and perceptual worlds don't always align.  Our ears may not match those of our electronic systems.
-
-We perceive several different aspects of sound.  We'll examine each of those components below
-
-#### Amplitude
-
-The first component of sound that we'll examine is loudness, or  amplitude.  In the physical sense, amplitude is 
-
-Amplitude is 
-
-#### Frequency
-
-Frequency is how often the air is moving back and forth.  Sound frequency is usually measured in Hertz, which is the number of cycles the air makes per second.  Roughly, we can hear the range between 20 and 20,000 Hertz. 
-
-Engineers and physicists usually measure frequency in Hertz, while musicians 
-
-#### Spectrum
-
-AKA timbre
-
-The
-
-## Sound And Electricity
-
-
-A microphone is a transducer that converts pressure waves in air into electrical signals.  Most microphones 
-
-
-
-
-Inverse square law
-Closer things are much louder.
-
-dB
-
-There is a more detailed definition of sound in this [Wikipedia Article](http://en.wikipedia.org/wiki/Sound).
-
-##Board Overview
-
-Looking at the front of the board,
-
-`front pic`
--> *Front of Sound Detector* <-
-
-**G** should be connected to the ground of the host circuit.
-
-**V** is the analog output of the keypad, and should be connected to an analogto-digital channel (ausuch as A0, A1, etc on an Arduino).
-
-**V** is the power supply, and should be connected to a voltage between 2.5V - 5.5V.
-
-### Basics of Sound
-
-air pressure
-
-frequency
-
-amplitude - dB
-
+* The dark green trace is the audio output of the sound detector.  The voltage directly from the microphone is found at this output.
+* The light green trace is the envelope output.  This analog voltage traces the amplitude of the sound.
+* Finally, the red line is the gate output.  This output is low when conditions are quiet, and goes high when sound is detected. 
 
 ### How It Works
 
----
+Having examined the outputs, lets also take a quick walk through the schematic, to gain an understanding of how each stage works. 
 
-##Hookup Example
+#### First Stage
 
-###Connecting The Sound Detector To An Arduino
+![Microphone capsule & preamplifier](pix/schem1.png)
 
-`pic`
--> *Basic hookup to an Arduino* <-
+The first section of the circuit is an electret microphone capsule.  The capsule is biased by the supply voltage, and it outputs an AC voltage that is riding a DC offset of approximately 1/2 the supply voltage.  
 
-(Sound Detector → Arduino)
+The `audio` output is riding that bias voltage, so it can be directly connected to the ADC of a microcontroller.
 
-* V+ → 5V
+The output from the capsule is an extremely small voltage, so the signal from the capsule is amplified by IC1G1, an operational amplifier stage.  By default, the preamplifier has an arithmetic gain of 100 (20 dB), and the gain can be adjusted by populating R17 (See `link to later`)
 
----
+#### Second Stage
 
----
-##Example Code
+![Envelope Follower](pix/schem2.png)
 
-...obtain the example sketch
-
-Build and upload the sketch, then open a serial terminal, and observe the output while pressing buttons.  The Arduino will print notifications as buttons are pressed and released. 
-
-`pic`
--> *The ...* <-
-
----
-
-##Resources and Going Further
+The second stage of the processing is an envelope follower.  IC1G3 forms an opamp-based precision rectifier.  This stage implements the equation
  
+	Vout = if(Vin > 0) 
+				then 0,
+		   else
+				Vin * -2
 
-###Modifications
+The opamp inverts and amplifies the signal.  When it's output swings high, D2 turns on, and charges C1.  Thus, C1 tracks the peaks of the input signal.  When the signal is not swinging, D2 is turned off, and C1 discharges through R9. 
 
-The Sound Detector 
+IC1G4 is a buffer amplifier, so external loads on the envelope pin won't change the C1's charge/discharge behavior. 
 
-#### Change the Gain
+This results in a signal that coarsely follows the peak amplitude of the input signal.  A louder sound will result in a higher voltage on the Envelope pin.
 
-`pix`
+#### Third Stage
 
--> *caption* <-
 
-###Digging Deeper
+![Schmitt Trigger Schematic](pix/schem3.png)
 
-A SPICE simulation of the peak detector and Schmitt trigger is available in the *documents* directory of the [Sound Detector Github repository](https://github.com/sparkfun/Sound_Detector).
+The Schmitt trigger watches the envelope signal, and toggles the output when the threshold is exceeded.  The Schmitt trigger is a comparator that adjusts it's threshold voltage when the output switches.  It's requires a higher voltage to switch on than to switch off.  This allows it to ignore some ripple in the input signal, like the ripple present in the output of the envelope follower stage.
 
-* schem
-* eagle files zip
-* [Github Repository](https://github.com/sparkfun/Sound_Detector)
+
+---
+### Configuration
+
+#### Amplitude Calibration
+
+The Sound Detector comes calibrated for moderate sensitivity - speaking directly into the microphone, or clapping your hands nearby should cause the gate output to fire.  If you find that it doesn't work well in a specific application, you can change the circuit to be more or less sensitive.
+
+It's most likely that you'll find the detector to be too sensitive.  In testing the board for this writeup, noisy air conditioning and music in the next office over were enough to set it off.  To make the board less sensitive, you can lower the preamplifier gain by populating R17.
+
+With R3 in place
+R17 val / arith gain / dB Gain
+none / 100 / 40 dB
+...
+
+If you want to make the sound detector more sensitive, so that it will be activated by quieter sounds, you can remove R3, and populate R17 
+
+With R3 removed
+R17 val / arith gain / dB Gain
+none / 100 / 40 dB
+...
+
+---
+#### Lights Out
+
+In some applications, the onboard LED may be distracting or undesirable.  To disable it, simply use a solder sucker or wick to remove the solder blob on SJ1.
+
+	pic of SJ1
+
+---
+#### Power Supply Sensitivity
+
+...
+
+---
+## Example Code
+
+
+
+(Sound Detector → Arduino )
+
+* GND → Supply Ground
+* VCC → Power supply voltage between 3.5 and 5.5 Volts
+* Gate → Pin 2
+* Envelope → A0
+
+Additionally, as described in the [calibration guide](...) , a 33K Ohm resistor was soldered into position R17.  R3 was left in place.
+	
+
+This code simultaneously demonstrates two different operating modes of the Sound Detector.  
+
+* First, using the pin change interrupt facility, 
+* Second, is uses an analog input to periodically sample the envelop signal.  It uses a series of thresholds to display the relative loudness level on the serial port. 
+
+Hmmm...catch pin change - set LED.
+Also sample env in loop, and print occasional messages of loudness?  Quiet, moderate, loud...
+
+
+This sketch
+...uses the pin change interrupt library
+
+When the gate pin goes high ...
+
+...also, outside of the interrupt, ...
+
+---
+## Analog Variant
+
+
+---
+
+## Troubleshooting:
+-noisy supply!!
+-better at 5V...
+-sensitive to handling noise & vibration
+	- "dead cat" for wind noise
+	- 
+## Documentation
+* Demo Code 
+* SPICE files
