@@ -23,8 +23,8 @@
  * For more details about the Sound Detector, please check the hookup guide.
  *
  * Connections:
- * The Sound detector is connected to the Adrduino as follows:
- * (Sound detector -> Arduino pin)
+ * The Sound Detector is connected to the Adrduino as follows:
+ * (Sound Detector -> Arduino pin)
  * GND → GND
  * VCC → 5V
  * Gate → Pin 2
