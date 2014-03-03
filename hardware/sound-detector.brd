@@ -136,7 +136,7 @@
 <text x="40.64" y="12.7" size="1.27" layer="22" font="vector" ratio="15" rot="MR180" align="center-right">ENVELOPE</text>
 <text x="40.64" y="15.24" size="1.27" layer="22" font="vector" ratio="15" rot="MR180" align="center-right">AUDIO</text>
 <text x="27.94" y="8.509" size="0.8128" layer="22" font="vector" ratio="15" rot="MR0">Clear SJ1 to disable LED</text>
-<text x="0.635" y="1.27" size="1.27" layer="16" font="vector" ratio="15" rot="MR0" align="center-right">V10</text>
+<text x="0.635" y="1.27" size="1.27" layer="16" font="vector" ratio="15" rot="MR0" align="center-right">V11</text>
 <text x="20.32" y="0.635" size="1.27" layer="21" font="vector" ratio="15">SOUND DETECTOR</text>
 <text x="22.86" y="16.51" size="1.27" layer="22" font="vector" ratio="15" rot="MR0">SOUND DETECTOR</text>
 <text x="14.986" y="3.175" size="0.8128" layer="21" font="vector" ratio="15" rot="R90">R3</text>
