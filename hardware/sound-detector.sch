@@ -6924,8 +6924,8 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <part name="R19" library="SparkFun-Resistors" deviceset="100OHM1/10W1%(0603)" device="" value="100"/>
 <part name="STANDOFF1" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
 <part name="STANDOFF2" library="SparkFun-Electromechanical" deviceset="STAND-OFF" device=""/>
-<part name="FID1" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="UFIDUCIAL"/>
-<part name="FID2" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="UFIDUCIAL"/>
+<part name="FID3" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2"/>
+<part name="FID4" library="SparkFun-Aesthetics" deviceset="FIDUCIAL" device="1X2"/>
 </parts>
 <sheets>
 <sheet>
@@ -7013,8 +7013,8 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <instance part="R19" gate="G$1" x="96.52" y="119.38"/>
 <instance part="STANDOFF1" gate="G$1" x="223.52" y="27.94"/>
 <instance part="STANDOFF2" gate="G$1" x="223.52" y="30.48"/>
-<instance part="FID1" gate="G$1" x="157.48" y="38.1"/>
-<instance part="FID2" gate="G$1" x="162.56" y="38.1"/>
+<instance part="FID3" gate="G$1" x="167.64" y="38.1"/>
+<instance part="FID4" gate="G$1" x="172.72" y="38.1"/>
 </instances>
 <busses>
 </busses>
