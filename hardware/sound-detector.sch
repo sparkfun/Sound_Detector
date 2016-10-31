@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.5.0">
+<eagle version="7.7.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -117,7 +117,7 @@
 <layer number="251" name="SMDround" color="12" fill="11" visible="no" active="no"/>
 <layer number="254" name="cooling" color="7" fill="1" visible="no" active="yes"/>
 </layers>
-<schematic xreflabel="%F%N/%S.%C%R" xrefpart="/%S.%C%R">
+<schematic xreflabel="%F%N/%S" xrefpart="/%S">
 <libraries>
 <library name="SparkFun-Aesthetics">
 <description>&lt;h3&gt;SparkFun Electronics' preferred foot prints&lt;/h3&gt;
@@ -6931,7 +6931,7 @@ This is the mechanical footprint for a #4 phillips button head screw. Use the ke
 <sheet>
 <plain>
 <text x="167.64" y="10.16" size="2.54" layer="94" font="vector">Byron Jacquot</text>
-<text x="238.76" y="7.62" size="2.54" layer="94">V10</text>
+<text x="238.76" y="7.62" size="2.54" layer="94">V11</text>
 <text x="66.04" y="60.96" size="1.778" layer="97" font="vector">Supply decoupling - place near U1</text>
 <wire x1="0" y1="104.14" x2="60.96" y2="104.14" width="0.2032" layer="97" style="longdash"/>
 <wire x1="60.96" y1="104.14" x2="114.3" y2="104.14" width="0.2032" layer="97" style="longdash"/>
